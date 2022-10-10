@@ -125,16 +125,24 @@ class Controller:
 ## App Class {#app}
 
 ```python
+import logging
+import logging.config
+
 import model
 import view
 import controller
 
 
 class App:
-    def __init__(self, model, view):
+    def __init__(self, model, view, debug=False):
+        self.__setup_logger(debug)
+
         self.model: model.Model = model
         self.view: view.View = view
         self.controller: controller.Controller = controller.Controller(self.model, self.view)
+    def __setup_logger(self, debug):
+        logging.config.fileConfig(fname='log.conf', disable_existing_loggers=False)
+        self.logger = logging.getLogger(__name__)
     
     def start(self):
         self.controller.run()

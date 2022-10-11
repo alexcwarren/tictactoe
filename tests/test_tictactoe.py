@@ -14,6 +14,9 @@ def app():
     return tictactoe.App(view=view.TicTacToe_TestView())
 
 
+# App
+
+
 def test_app_model(app):
     assert isinstance(app.model, model.TicTacToe_Model)
 
@@ -39,6 +42,9 @@ def test_app_controller_view(app):
 def test_app_view_controller(app):
     assert isinstance(app.view.controller, controller.TicTacToe_Controller)
     assert app.view.controller is app.controller
+
+
+# Model
 
 
 def test_model_players(app):
@@ -130,3 +136,24 @@ def test_model_X_wins_diagonally_topleft_bottomright(app):
 def test_model_O_wins_diagonally_bottomleft_topright(app):
     plays = [(0, 0), (2, 0), (2, 2), (1, 1), (0, 1), (0, 2)]
     play_to_win(app, plays, PLAYER_O)
+
+
+# Controller
+
+
+def test_controller_get_grid(app):
+    assert app.controller.get_grid() == app.model.grid
+    app.model.reset()
+
+
+def test_controller_get_current_player(app):
+    assert app.controller.get_current_player() == PLAYER_X
+
+
+@pytest.mark.parametrize(
+    "row, column, player",
+    [(0, 0, PLAYER_X), (1, 1, PLAYER_O), (2, 2, PLAYER_X), (1, 0, PLAYER_O)],
+)
+def test_controller_update_grid(row: int, column: int, player: str, app):
+    app.controller.update_grid(row, column)
+    assert app.controller.get_grid()[row][column] == player

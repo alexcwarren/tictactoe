@@ -140,6 +140,7 @@ class App:
         self.model: model.Model = model
         self.view: view.View = view
         self.controller: controller.Controller = controller.Controller(self.model, self.view)
+    
     def __setup_logger(self, debug):
         logging.config.fileConfig(fname='log.conf', disable_existing_loggers=False)
         self.logger = logging.getLogger(__name__)

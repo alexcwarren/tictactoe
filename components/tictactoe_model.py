@@ -1,3 +1,8 @@
+import logging
+import logging.config
+import logging.handlers
+
+
 class TicTacToe_Model:
     __PLAYER_X: str = "X"
     __PLAYER_O: str = "O"
@@ -12,6 +17,8 @@ class TicTacToe_Model:
         return TicTacToe_Model.__PLAYER_O
 
     def __init__(self):
+        self.__setup_config()
+        self.logger.debug("Creating model")
         self.__turn: int = 0
         self.__current_player: str = ""
         self.__grid: list[list[int]] = []
@@ -29,6 +36,10 @@ class TicTacToe_Model:
     @property
     def winner(self):
         return self.__winner
+
+    def __setup_config(self):
+        logging.config.fileConfig(fname="log.conf", disable_existing_loggers=False)
+        self.logger = logging.getLogger("Model")
 
     def update_grid(self, row: int, column: int):
         if self.__grid[row][column] != "":

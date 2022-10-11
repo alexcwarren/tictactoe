@@ -8,6 +8,7 @@ python tictactoe.py
 
 ## To Test
 ```bash
+# Console output only
 python -m pytest -v
 ```
 

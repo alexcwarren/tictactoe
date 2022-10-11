@@ -5,6 +5,9 @@ import components.tictactoe_model as model
 import components.tictactoe_view as view
 import tictactoe
 
+PLAYER_X: str = "X"
+PLAYER_O: str = "O"
+
 
 @pytest.fixture
 def app():
@@ -39,12 +42,12 @@ def test_app_view_controller(app):
 
 
 def test_model_players(app):
-    assert app.model.X == "X"
-    assert app.model.O == "O"
+    assert app.model.playerX == PLAYER_X
+    assert app.model.playerO == PLAYER_O
 
 
 def test_model_starting_player(app):
-    assert app.model.current_player == "X"
+    assert app.model.current_player == PLAYER_X
 
 
 def test_model_3x3_grid(app):
@@ -58,13 +61,13 @@ def test_model_start_empty_grid(app):
 
 def test_model_first_turn(app):
     app.model.update_grid(0, 1)
-    assert app.model.grid[0][1] == "X"
-    assert app.model.current_player == "O"
+    assert app.model.grid[0][1] == PLAYER_X
+    assert app.model.current_player == PLAYER_O
 
 
 @pytest.mark.parametrize(
     "row, column, result",
-    [(1, 1, "O"), (2, 2, "X"), (0, 0, "O"), (1, 0, "X")],
+    [(1, 1, PLAYER_O), (2, 2, PLAYER_X), (0, 0, PLAYER_O), (1, 0, PLAYER_X)],
 )
 def test_model_more_turns(row: int, column: int, result: str, app):
     app.model.update_grid(row, column)
@@ -79,22 +82,51 @@ def test_model_reset(app):
     assert any(any(cell != "" for cell in row) for row in app.model.grid)
     app.model.reset()
     assert all(all(cell == "" for cell in row) for row in app.model.grid)
-    assert app.model.current_player == 'X'
+    assert app.model.current_player == PLAYER_X
+
 
 def play_to_win(app, plays, winner):
     app.model.reset()
-    for row,column in plays:
+    for row, column in plays:
         app.model.update_grid(row, column)
     assert app.model.winner == winner
 
+
 def test_model_X_wins_horizontally_first_row(app):
-    plays = [(0,0), (1,0), (0,1), (1,1), (0,2)]
-    play_to_win(app, plays, 'X')
+    plays = [(0, 0), (1, 0), (0, 1), (1, 1), (0, 2)]
+    play_to_win(app, plays, PLAYER_X)
+
+
+def test_model_O_wins_horizontally_second_row(app):
+    plays = [(0, 0), (1, 1), (2, 0), (1, 0), (0, 1), (1, 2)]
+    play_to_win(app, plays, PLAYER_O)
+
+
+def test_model_X_wins_horizontally_third_row(app):
+    plays = [(2, 0), (1, 1), (2, 2), (0, 1), (2, 1)]
+    play_to_win(app, plays, PLAYER_X)
+
+
+def test_model_X_wins_vertically_first_column(app):
+    plays = [(2, 0), (2, 1), (0, 0), (1, 1), (1, 0)]
+    play_to_win(app, plays, PLAYER_X)
+
 
 def test_model_O_wins_vertically_second_column(app):
-    plays = [(0,0), (0,1), (1,0), (1,1), (0,2), (2,1)]
-    play_to_win(app, plays, 'O')
+    plays = [(0, 0), (0, 1), (1, 0), (1, 1), (0, 2), (2, 1)]
+    play_to_win(app, plays, PLAYER_O)
+
+
+def test_model_X_wins_vertically_third_column(app):
+    plays = [(0, 2), (0, 0), (2, 2), (1, 1), (1, 2)]
+    play_to_win(app, plays, PLAYER_X)
+
 
 def test_model_X_wins_diagonally_topleft_bottomright(app):
-    plays = [(0,0), (0,1), (1,1), (2,1), (2,2)]
-    play_to_win(app, plays, 'X')
+    plays = [(0, 0), (0, 1), (1, 1), (2, 1), (2, 2)]
+    play_to_win(app, plays, PLAYER_X)
+
+
+def test_model_O_wins_diagonally_bottomleft_topright(app):
+    plays = [(0, 0), (2, 0), (2, 2), (1, 1), (0, 1), (0, 2)]
+    play_to_win(app, plays, PLAYER_O)

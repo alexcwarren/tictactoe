@@ -7,6 +7,7 @@ import tictactoe
 
 PLAYER_X: str = "X"
 PLAYER_O: str = "O"
+TIE: str = "TIE"
 
 
 @pytest.fixture
@@ -91,7 +92,7 @@ def test_model_reset(app):
     assert app.model.current_player == PLAYER_X
 
 
-def play_to_win(app, plays, winner):
+def play_to_end(app, plays, winner):
     app.model.reset()
     for row, column in plays:
         app.model.update_grid(row, column)
@@ -100,42 +101,47 @@ def play_to_win(app, plays, winner):
 
 def test_model_X_wins_horizontally_first_row(app):
     plays = [(0, 0), (1, 0), (0, 1), (1, 1), (0, 2)]
-    play_to_win(app, plays, PLAYER_X)
+    play_to_end(app, plays, PLAYER_X)
 
 
 def test_model_O_wins_horizontally_second_row(app):
     plays = [(0, 0), (1, 1), (2, 0), (1, 0), (0, 1), (1, 2)]
-    play_to_win(app, plays, PLAYER_O)
+    play_to_end(app, plays, PLAYER_O)
 
 
 def test_model_X_wins_horizontally_third_row(app):
     plays = [(2, 0), (1, 1), (2, 2), (0, 1), (2, 1)]
-    play_to_win(app, plays, PLAYER_X)
+    play_to_end(app, plays, PLAYER_X)
 
 
 def test_model_X_wins_vertically_first_column(app):
     plays = [(2, 0), (2, 1), (0, 0), (1, 1), (1, 0)]
-    play_to_win(app, plays, PLAYER_X)
+    play_to_end(app, plays, PLAYER_X)
 
 
 def test_model_O_wins_vertically_second_column(app):
     plays = [(0, 0), (0, 1), (1, 0), (1, 1), (0, 2), (2, 1)]
-    play_to_win(app, plays, PLAYER_O)
+    play_to_end(app, plays, PLAYER_O)
 
 
 def test_model_X_wins_vertically_third_column(app):
     plays = [(0, 2), (0, 0), (2, 2), (1, 1), (1, 2)]
-    play_to_win(app, plays, PLAYER_X)
+    play_to_end(app, plays, PLAYER_X)
 
 
 def test_model_X_wins_diagonally_topleft_bottomright(app):
     plays = [(0, 0), (0, 1), (1, 1), (2, 1), (2, 2)]
-    play_to_win(app, plays, PLAYER_X)
+    play_to_end(app, plays, PLAYER_X)
 
 
 def test_model_O_wins_diagonally_bottomleft_topright(app):
     plays = [(0, 0), (2, 0), (2, 2), (1, 1), (0, 1), (0, 2)]
-    play_to_win(app, plays, PLAYER_O)
+    play_to_end(app, plays, PLAYER_O)
+
+
+def test_model_tie(app):
+    plays = [(0, 0)]
+    play_to_end(app, plays, TIE)
 
 
 # Controller

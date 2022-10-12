@@ -1,0 +1,40 @@
+============================= test session starts =============================
+platform win32 -- Python 3.10.5, pytest-7.1.3, pluggy-1.0.0 -- C:\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\alexa\Git\tictactoe
+plugins: pylama-8.4.1
+collecting ... collected 31 items
+
+tests/test_tictactoe.py::test_app_model PASSED                           [  3%]
+tests/test_tictactoe.py::test_app_view PASSED                            [  6%]
+tests/test_tictactoe.py::test_app_controller PASSED                      [  9%]
+tests/test_tictactoe.py::test_app_controller_model PASSED                [ 12%]
+tests/test_tictactoe.py::test_app_controller_view PASSED                 [ 16%]
+tests/test_tictactoe.py::test_app_view_controller PASSED                 [ 19%]
+tests/test_tictactoe.py::test_model_players PASSED                       [ 22%]
+tests/test_tictactoe.py::test_model_starting_player PASSED               [ 25%]
+tests/test_tictactoe.py::test_model_3x3_grid PASSED                      [ 29%]
+tests/test_tictactoe.py::test_model_start_empty_grid PASSED              [ 32%]
+tests/test_tictactoe.py::test_model_first_turn PASSED                    [ 35%]
+tests/test_tictactoe.py::test_model_more_turns[1-1-O] PASSED             [ 38%]
+tests/test_tictactoe.py::test_model_more_turns[2-2-X] PASSED             [ 41%]
+tests/test_tictactoe.py::test_model_more_turns[0-0-O] PASSED             [ 45%]
+tests/test_tictactoe.py::test_model_more_turns[1-0-X] PASSED             [ 48%]
+tests/test_tictactoe.py::test_model_no_winner PASSED                     [ 51%]
+tests/test_tictactoe.py::test_model_reset PASSED                         [ 54%]
+tests/test_tictactoe.py::test_model_X_wins_horizontally_first_row PASSED [ 58%]
+tests/test_tictactoe.py::test_model_O_wins_horizontally_second_row PASSED [ 61%]
+tests/test_tictactoe.py::test_model_X_wins_horizontally_third_row PASSED [ 64%]
+tests/test_tictactoe.py::test_model_X_wins_vertically_first_column PASSED [ 67%]
+tests/test_tictactoe.py::test_model_O_wins_vertically_second_column PASSED [ 70%]
+tests/test_tictactoe.py::test_model_X_wins_vertically_third_column PASSED [ 74%]
+tests/test_tictactoe.py::test_model_X_wins_diagonally_topleft_bottomright PASSED [ 77%]
+tests/test_tictactoe.py::test_model_O_wins_diagonally_bottomleft_topright PASSED [ 80%]
+tests/test_tictactoe.py::test_controller_get_grid PASSED                 [ 83%]
+tests/test_tictactoe.py::test_controller_get_current_player PASSED       [ 87%]
+tests/test_tictactoe.py::test_controller_update_grid[0-0-X] PASSED       [ 90%]
+tests/test_tictactoe.py::test_controller_update_grid[1-1-O] PASSED       [ 93%]
+tests/test_tictactoe.py::test_controller_update_grid[2-2-X] PASSED       [ 96%]
+tests/test_tictactoe.py::test_controller_update_grid[1-0-O] PASSED       [100%]
+
+============================= 31 passed in 0.41s ==============================

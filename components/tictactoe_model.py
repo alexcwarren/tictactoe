@@ -4,9 +4,11 @@ import logging.handlers
 
 
 class TicTacToe_Model:
+    __SIZE: int = 3
     __PLAYER_X: str = "X"
     __PLAYER_O: str = "O"
     __PLAYERS: list[str] = [__PLAYER_O, __PLAYER_X]
+    __TIE: str = "TIE"
 
     @property
     def playerX(self):
@@ -22,7 +24,9 @@ class TicTacToe_Model:
         self.__turn: int = 0
         self.__current_player: str = ""
         self.__grid: list[list[int]] = []
+        self.__num_empty_cells: int = 0
         self.__winner: str = ""
+        self.__game_over: bool = False
         self.reset()
 
     @property
@@ -42,11 +46,18 @@ class TicTacToe_Model:
         self.logger = logging.getLogger("Model")
 
     def update_grid(self, row: int, column: int):
+        if self.__game_over:
+            return
+
         if self.__grid[row][column] != "":
             raise Exception(
                 f'Cell [{row}][{column}] already populated with "{self.__grid[row][column]}"'
             )
         self.__grid[row][column] = self.__current_player
+        self.__num_empty_cells -= 1
+        if self.__num_empty_cells <= 0:
+            self.__tie_game()
+            return
         self.__check_winner()
         self.__next_player()
 
@@ -54,10 +65,12 @@ class TicTacToe_Model:
         self.__turn = 0
         self.__next_player()
         self.__clear_grid()
+        self.__num_empty_cells = TicTacToe_Model.__SIZE ** 2
         self.__winner = ""
+        self.__game_over = False
 
     def __clear_grid(self):
-        self.__grid = [["" for _ in range(3)] for _ in range(3)]
+        self.__grid = [["" for _ in range(TicTacToe_Model.__SIZE)] for _ in range(TicTacToe_Model.__SIZE)]
 
     def __check_winner(self):
         if self.__check_winner_horizontally():
@@ -66,6 +79,10 @@ class TicTacToe_Model:
             return
         if self.__check_winner_diagonally():
             return
+
+    def __tie_game(self):
+        self.__winner = TicTacToe_Model.__TIE
+        self.__game_over = True
 
     def __check_winner_horizontally(self):
         for player in TicTacToe_Model.__PLAYERS:

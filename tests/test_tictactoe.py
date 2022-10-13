@@ -140,7 +140,7 @@ def test_model_O_wins_diagonally_bottomleft_topright(app):
 
 
 def test_model_tie(app):
-    plays = [(0, 0)]
+    plays = [(0, 0), (0, 1), (0, 2), (1, 1), (1, 0), (1, 2), (2, 0), (2, 1), (2, 2)]
     play_to_end(app, plays, TIE)
 
 

@@ -27,11 +27,16 @@ class TicTacToe_Controller:
     def get_current_player(self):
         return self.__model.current_player
 
+    def get_winner(self):
+        return self.__model.winner
+
     def get_grid(self):
         return self.__model.grid
 
     def update_grid(self, row: int, column: int):
         self.__model.update_grid(row, column)
+        if self.__model.is_game_over:
+            self.__view.end_game()
         self.__view.render()
 
     def run(self):

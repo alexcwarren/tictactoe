@@ -48,6 +48,7 @@ class TicTacToe_GUIView(tk.Tk, TicTacToe_View):
         self.columnconfigure(0, weight=1)
         self.__build_menu_bar()
         self.__build_board()
+        self.__is_game_over: bool = False
 
     def __build_menu_bar(self):
         pass
@@ -55,9 +56,10 @@ class TicTacToe_GUIView(tk.Tk, TicTacToe_View):
     def __build_board(self):
         self.board_frame = tk.Frame(self)
         self.board_frame_row = 0
+        self.board_frame.rowconfigure(self.board_frame_row, weight=1, minsize=50)
         self.board_frame.grid(row=self.board_frame_row, column=0)
         self.current_player_label = tk.Label(self.board_frame)
-        self.current_player_label.grid(row=0, column=1)
+        self.current_player_label.grid(row=0, column=0)
 
         self.grid_frame = tk.Frame(self)
         self.grid_frame_row = self.board_frame_row + 1
@@ -81,6 +83,12 @@ class TicTacToe_GUIView(tk.Tk, TicTacToe_View):
                 button_row.append(button)
             self.grid.append(button_row)
 
+        self.winner_frame = tk.Frame(self)
+        self.winner_frame_row = self.grid_frame_row + 1
+        self.winner_frame.grid(row=self.winner_frame_row, column=0)
+        self.winner_label = tk.Label(self.winner_frame)
+        self.winner_label.grid(row=0, column=0)
+
     def __cell_pressed(self, row: int, column: int):
         self.grid[row][column]["text"] = self.controller.get_current_player()
         self.controller.update_grid(row, column)
@@ -95,8 +103,21 @@ class TicTacToe_GUIView(tk.Tk, TicTacToe_View):
     def run(self):
         self.mainloop()
 
+    def end_game(self):
+        self.__is_game_over = True
+    
+    def new_game(self):
+        #TODO
+        pass
+    
+    def __disable_play(self):
+        for row in self.grid:
+            for cell in row:
+                cell.config(state=tk.DISABLED)
+
     def render(self):
-        self.current_player_label["text"] = self.get_current_player()
-        for r, row in enumerate(self.grid):
-            for c, cell in enumerate(row):
-                self.grid[r][c]
+        if self.__is_game_over:
+            self.winner_label["text"] = self.controller.get_winner()
+            self.__disable_play()
+        else:
+            self.current_player_label["text"] = self.get_current_player()

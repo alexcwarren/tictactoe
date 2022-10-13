@@ -26,7 +26,7 @@ class TicTacToe_Model:
         self.__grid: list[list[int]] = []
         self.__num_empty_cells: int = 0
         self.__winner: str = ""
-        self.__game_over: bool = False
+        self.__is_game_over: bool = False
         self.reset()
 
     @property
@@ -39,20 +39,25 @@ class TicTacToe_Model:
 
     @property
     def winner(self):
-        return self.__winner
+        if self.__winner == TicTacToe_Model.__TIE:
+            return self.__winner
+        return f"Player {self.__winner} wins!"
+
+    @property
+    def is_game_over(self):
+        return self.__is_game_over
 
     def __setup_config(self):
         logging.config.fileConfig(fname="log.conf", disable_existing_loggers=False)
         self.logger = logging.getLogger("Model")
 
     def update_grid(self, row: int, column: int):
-        if self.__game_over:
-            return
-
         if self.__grid[row][column] != "":
             raise Exception(
                 f'Cell [{row}][{column}] already populated with "{self.__grid[row][column]}"'
             )
+        if self.__is_game_over:
+            return
         self.__grid[row][column] = self.__current_player
         self.__num_empty_cells -= 1
         if self.__num_empty_cells <= 0:
@@ -65,24 +70,30 @@ class TicTacToe_Model:
         self.__turn = 0
         self.__next_player()
         self.__clear_grid()
-        self.__num_empty_cells = TicTacToe_Model.__SIZE ** 2
+        self.__num_empty_cells = TicTacToe_Model.__SIZE**2
         self.__winner = ""
-        self.__game_over = False
+        self.__is_game_over = False
 
     def __clear_grid(self):
-        self.__grid = [["" for _ in range(TicTacToe_Model.__SIZE)] for _ in range(TicTacToe_Model.__SIZE)]
+        self.__grid = [
+            ["" for _ in range(TicTacToe_Model.__SIZE)]
+            for _ in range(TicTacToe_Model.__SIZE)
+        ]
 
     def __check_winner(self):
         if self.__check_winner_horizontally():
+            self.__is_game_over = True
             return
         if self.__check_winner_vertically():
+            self.__is_game_over = True
             return
         if self.__check_winner_diagonally():
+            self.__is_game_over = True
             return
 
     def __tie_game(self):
         self.__winner = TicTacToe_Model.__TIE
-        self.__game_over = True
+        self.__is_game_over = True
 
     def __check_winner_horizontally(self):
         for player in TicTacToe_Model.__PLAYERS:

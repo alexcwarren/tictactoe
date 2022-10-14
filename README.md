@@ -7,6 +7,7 @@ python tictactoe.py
 ```
 
 ## To Test
+
 ```bash
 # Console output only
 python -m pytest -v
@@ -20,11 +21,13 @@ python -m pytest -v 2>&1 | tee <path_to_logfile>
 ```
 
 ## To Check Code Quality
+
 ```bash
 pylama
 ```
 
 ## To Format Code
+
 ```bash
 # Sort imports
 isort .

@@ -11,6 +11,7 @@ class TicTacToe_Controller:
         self.__model: ttt_model.TicTacToe_Model = model
         self.__view: ttt_view.TicTacToe_View = view
         self.__view.controller = self
+        self.__view.setup_config()
 
     @property
     def model(self):

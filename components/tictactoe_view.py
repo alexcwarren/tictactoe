@@ -7,10 +7,11 @@ from functools import partial
 
 class TicTacToe_View(abc.ABC):
     SIZE = 3
+    __controller = None
 
-    def __init__(self):
-        self.__setup_config()
-        self.__controller = None
+    # def __init__(self):
+    #     self.__setup_config()
+    #     self.__controller = None
 
     @property
     def controller(self):
@@ -22,7 +23,7 @@ class TicTacToe_View(abc.ABC):
 
         self.__controller: ttt_controller = controller
 
-    def __setup_config(self):
+    def setup_config(self):
         logging.config.fileConfig(fname="log.conf", disable_existing_loggers=False)
         self.logger = logging.getLogger("View")
 
@@ -105,11 +106,11 @@ class TicTacToe_GUIView(tk.Tk, TicTacToe_View):
 
     def end_game(self):
         self.__is_game_over = True
-    
+
     def new_game(self):
-        #TODO
+        # TODO
         pass
-    
+
     def __disable_play(self):
         for row in self.grid:
             for cell in row:

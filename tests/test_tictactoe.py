@@ -8,6 +8,7 @@ import tictactoe
 PLAYER_X: str = "X"
 PLAYER_O: str = "O"
 TIE: str = "TIE"
+WINNER_MESSAGE: str = lambda m : m if m == TIE else f"Player {m} wins!"
 
 
 @pytest.fixture
@@ -82,7 +83,7 @@ def test_model_more_turns(row: int, column: int, result: str, app):
 
 
 def test_model_no_winner(app):
-    assert app.model.winner == ""
+    assert app.model.winner == WINNER_MESSAGE("")
 
 
 def test_model_reset(app):
@@ -96,7 +97,7 @@ def play_to_end(app, plays, winner):
     app.model.reset()
     for row, column in plays:
         app.model.update_grid(row, column)
-    assert app.model.winner == winner
+    assert app.model.winner == WINNER_MESSAGE(winner)
 
 
 def test_model_X_wins_horizontally_first_row(app):
@@ -140,7 +141,7 @@ def test_model_O_wins_diagonally_bottomleft_topright(app):
 
 
 def test_model_tie(app):
-    plays = [(0, 0), (0, 1), (0, 2), (1, 1), (1, 0), (1, 2), (2, 0), (2, 1), (2, 2)]
+    plays = [(0, 0), (0, 1), (0, 2), (1, 1), (1, 0), (1, 2), (2, 1), (2, 0), (2, 2)]
     play_to_end(app, plays, TIE)
 
 

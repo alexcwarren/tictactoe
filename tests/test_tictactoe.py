@@ -8,7 +8,7 @@ import tictactoe
 PLAYER_X: str = "X"
 PLAYER_O: str = "O"
 TIE: str = "TIE"
-WINNER_MESSAGE: str = lambda m : m if m == TIE else f"Player {m} wins!"
+WINNER_MESSAGE: str = lambda m: m if m == TIE else f"Player {m} wins!"
 
 
 @pytest.fixture

@@ -1,37 +1,97 @@
-# Tic-Tac-Toe app
+# Tic-Tac-Toe
 
-## To Run
+A small Python Tic-Tac-Toe application with a graphical user interface.
+
+This project was built as a programming exercise with an emphasis on separating application logic into model, view, and controller components.
+
+## Run
+
+Clone the repository and run:
 
 ```bash
 python tictactoe.py
 ```
 
-## To Test
+The application uses only Python's standard library at runtime.
+
+## Development Setup
+
+Create and activate a virtual environment if desired, then install the development dependencies:
 
 ```bash
-# Console output only
+pip install -r requirements-dev.txt
+```
+
+## Testing
+
+Run the test suite:
+
+```bash
 python -m pytest -v
-
-# Consle output and write to logfile
-# (PowerShell)
-python -m pytest -v *>&1 | Tee-Object -FilePath <path_to_logfile>
-
-# (bash)
-python -m pytest -v 2>&1 | tee <path_to_logfile>
 ```
 
-## To Check Code Quality
+Pytest configuration is stored in `pytest.ini`.
+
+## Code Quality
+
+Run Pylama against the application and tests:
 
 ```bash
-pylama
+pylama tictactoe.py components tests
 ```
 
-## To Format Code
+## Formatting
+
+Sort imports:
 
 ```bash
-# Sort imports
 isort .
+```
 
-# Format according to PEP 8
+Format the Python code:
+
+```bash
 black .
 ```
+
+## Logging
+
+The application writes runtime logs to:
+
+```text
+logs/app.log
+```
+
+The `logs` directory is created automatically when needed.
+
+Logging configuration is defined in:
+
+```text
+log.conf
+```
+
+## Project Structure
+
+```text
+components/    Application model, view, and controller
+design_docs/   Project design documentation
+tests/         Automated tests
+tictactoe.py   Application entry point
+log.conf       Logging configuration
+```
+
+## About This Project
+
+This is a small learning project rather than a production application.
+
+It was useful practice for working with:
+
+- Python GUI development
+- model-view-controller-style separation
+- automated testing with pytest
+- application logging
+- linting and formatting tools
+
+## License
+
+Licensed under the MIT License. See [`LICENSE`](LICENSE).
